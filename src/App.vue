@@ -4,9 +4,9 @@
 </template>
 
 <script>
-import * as maptalks from 'maptalks';
-import { GroupGLLayer } from 'maptalks-gl';
-import CustomGrid from './CustomGrid.js';
+import * as maptalks from 'maptalks-gl';
+// import { Map, TileLayer, GroupGLLayer, GLTFLayer, GLTFMarker } from 'maptalks-gl';
+// import CustomGrid from './CustomGrid.js';
 
 export default {
   name: 'App',
@@ -44,7 +44,15 @@ export default {
                 } //211服务器上的谷歌底图
             })
       });
-      const groupLayer = new GroupGLLayer("group", [], {
+      const gltflayer = new maptalks.GLTFLayer('gltf');
+      const gltfmarker = new maptalks.GLTFMarker(map.getCenter(), {
+        symbol: {
+          url: 'http://localhost/zg/drone-normal.glb',
+          modelHeight: 100
+        }
+      });
+      gltfmarker.addTo(gltflayer);
+      const groupLayer = new maptalks.GroupGLLayer("group", [gltflayer], {
             sceneConfig: {
                 environment: {
                     enable: true,
@@ -70,12 +78,12 @@ export default {
             },
           });
       groupLayer.addTo(map);
-      const mygrid = new CustomGrid({
-          lineUrl: 'http://localhost/geojson/网格线_0418.geojson',//网格线geojson的地址
-          pointUrl: 'http://localhost/geojson/网格点_0418.geojson',//网格点geojson的地址
-          floorNum: 26//楼层数
-      });
-      mygrid.addTo(groupLayer);
+      // const mygrid = new CustomGrid({
+      //     lineUrl: 'http://localhost/geojson/网格线_0418.geojson',//网格线geojson的地址
+      //     pointUrl: 'http://localhost/geojson/网格点_0418.geojson',//网格点geojson的地址
+      //     floorNum: 26//楼层数
+      // });
+      // mygrid.addTo(groupLayer);
     }
   }
 }
